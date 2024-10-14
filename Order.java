@@ -8,12 +8,12 @@
  */
 public class Order
 {
-    //declarar campo sendingName
+    private String sendingName;
     private Location location;
     private Location destination;
-    //declarar campo deliveryTime
-    //declarar campo weight
-    //declarar campo destinationName
+    private int deliveryTime;
+    private Float weight;
+    private String destinationName;
     private String deliveryPersonName;
     
     /**
@@ -47,7 +47,7 @@ public class Order
     public String getDeliveryPersonName()
     {
     //TODO Debe poder devolver el nombre de la persona de reparto.
-    return "";
+    return deliveryPersonName;
     }
 
     /**
@@ -57,6 +57,7 @@ public class Order
     public void setDeliveryPersonName(String deliveryPersonName)
     {
     //TODO Debe poder modificarse el nombre de la persona de reparto.
+    this.deliveryPersonName=deliveryPersonName;
     }
 
     /**
@@ -65,7 +66,7 @@ public class Order
     public Location getDestination()
     {
      //TODO Debe poder devolver la localización donde hay que llevar el Order.
-        return null;
+        return destination;
     }
 
     /**
@@ -87,5 +88,6 @@ public class Order
         // TODO
         return "";
     }
+
 
 }
