@@ -5,10 +5,11 @@
  * @version 2016.02.29
  * @version 2024.10.07 DP classes 
  */
+import java.lang.Math;
 public class Location 
 {
-    public int x;  //TODO cambiar a privatee
-    public int y;  //TODO cambiar a private
+    private int x;  //TODO cambiar a privatee
+    private int y;  //TODO cambiar a private
 
     /**
      * Model a location in the city.
@@ -37,6 +38,12 @@ public class Location
     {
         return x;
     }
+    public void setX(int x){
+        this.x=x;
+    }
+     public void setY(int y){
+        this.y=y;
+    }
 
     /**
      * @return The y coordinate.
@@ -58,7 +65,23 @@ public class Location
         //TODO ahora mismo este método devuelve directamente el destino final
         //PERO DEBERIA ir calculando y devolviendo la siguiente posición por la que 
         // va pasando la persona que reparte hasta llegar al destino
-        return destination;
+        Location aux= new Location(getX(),getY());
+        if(getX()!=destination.getX()){
+            if(getX()>destination.getX()){
+                aux.setX(getX()+1);
+            }
+            else aux.setX(getX()-1);
+        }
+        if(getY()!=destination.getY()){
+            if(getY()<destination.getY()){
+                aux.setY(getY()+1);
+            }
+            else{
+                aux.setY(getY()-1);
+            }            
+        }        
+                
+        return aux;
     }
 
     /**
@@ -70,7 +93,13 @@ public class Location
     public int distance(Location destination)
     {
         //TODO implementar este método que devuelve el número total de pasos para alcanzar el destino
-        return 1;
+        int h = Math.abs(getX()-destination.getX());
+        int v = Math.abs(getY()-destination.getY());
+        
+        if(h>v)
+        return h;
+        else
+        return v;
     }
 
     /**
