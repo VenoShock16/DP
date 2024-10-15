@@ -8,17 +8,20 @@
 public class DeliveryPerson 
 {
     // The Delivery Company of this DeliveryPerson.
-    public DeliveryCompany company;   //TODO cambiar a private
+    private DeliveryCompany company;   //TODO cambiar a private
     // Where the person is.
-    public Location location;     //TODO cambiar a private
+    private Location location;     //TODO cambiar a private
     // Where the person is headed.
-    public  Location targetLocation;   //TODO cambiar a private
+    private  Location targetLocation;   //TODO cambiar a private
     // Record how often the person has nothing to do.
-    public int idleCount;       //TODO cambiar a private
+    private int idleCount;       //TODO cambiar a private
     //name of the delivery person
-    public String name; //TODO cambiar a private
+    private String name; //TODO cambiar a private
     //TODO añadir campos necesarios
-
+    private Order order;
+    
+    private int ordersDelivered;
+    
     /**
      * Constructor of class DeliveryPerson
      * @param company The delivery person's company. Must not be null.
@@ -37,6 +40,9 @@ public class DeliveryPerson
         this.location = location;
         targetLocation = null;
         idleCount = 0;
+        order =null;
+        ordersDelivered=0;
+        this.name=name;
         //TODO resto de inicializaciones pendientes
     }
 
@@ -155,8 +161,11 @@ public class DeliveryPerson
      */
     public boolean isFree()
     {
-        //TODO  implementar este método
-        return true;
+      if(order!=null){
+          return false;
+        
+      }else return true;
+        
     }
 
     /**
@@ -164,7 +173,9 @@ public class DeliveryPerson
      */
     public void notifyPickupArrival()
     {
+        
         //TODO  implementar este método
+        company.arrivedAtPickup(this);
     }
 
     /**
@@ -173,6 +184,7 @@ public class DeliveryPerson
     public void notifyOrderArrival(Order order)
     {
         //TODO  implementar este método
+        company.arrivedAtDestination(this, order);
     }
 
     /**
@@ -183,6 +195,8 @@ public class DeliveryPerson
     public void pickup(Order order)
     {
         //TODO  implementar este método
+        this.order=order;
+        setTargetLocation(order.getDestination());
 
     }
 
@@ -192,6 +206,7 @@ public class DeliveryPerson
     public void deliverOrder()
     {
         //TODO  implementar este método
+        
     }
 
     /**
