@@ -68,7 +68,16 @@ public class Order
      //TODO Debe poder devolver la localización donde hay que llevar el Order.
         return destination;
     }
-
+    public int getDeliveryTime()
+    {
+     //TODO Debe poder devolver la localización donde hay que llevar el Order.
+        return deliveryTime;
+    }
+    public String getSendingName()
+    {
+     //TODO Debe poder devolver la localización donde hay que llevar el Order.
+        return sendingName;
+    }    
     /**
      * Return details of the passenger, such as where it is.
      * @return A string representation of the passenger.
@@ -88,6 +97,6 @@ public class Order
         // TODO
         return "";
     }
-
+    
 
 }

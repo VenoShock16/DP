@@ -1,5 +1,7 @@
 import java.util.List;
-
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.*;
 /**
  * Write a description of class WareHouse here.
  * 
@@ -17,7 +19,7 @@ public class WareHouse
     public WareHouse()
     {
         // initialise instance variables
-      //  x = 0;
+      orders= new ArrayList<>();
     }
 
     /**
@@ -26,10 +28,23 @@ public class WareHouse
      * @param  y   a sample parameter for a method
      * @return     the sum of x and y 
      */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-       // return x + y;
-       return 1;
+    public Location getLocation(){
+        return location;
     }
+    
+    
+    public void addOrder(Order order) {
+        orders.add(order);
+        this.orders.sort(Comparator.comparingInt((Order o) -> o.getDeliveryTime()).thenComparing(Order::getSendingName));
+        
+    }
+    public List getOrders(){
+        return orders;
+    }
+    
+    public Order getOneOrder() {
+    if (!orders.isEmpty()) {
+        return orders.get(0);  
+    }else return null;  
+}
 }
