@@ -206,6 +206,10 @@ public class DeliveryPerson
     public void deliverOrder()
     {
         //TODO  implementar este método
+        order=null;
+        clearTargetLocation();
+        incrementOrdersDelivered();
+         
         
     }
 
@@ -215,7 +219,7 @@ public class DeliveryPerson
     public int ordersDelivered()
     {
         //TODO  implementar este método
-        return 1;
+        return ordersDelivered;
     }
 
     /**
@@ -223,7 +227,7 @@ public class DeliveryPerson
      */
     protected void incrementOrdersDelivered()
     {
-        //TODO  implementar este método
+        ordersDelivered++;
     }
 
     /**
@@ -232,8 +236,8 @@ public class DeliveryPerson
      */
     public int distanceToTheTargetLocation()
     {
-        //TODO  implementar este método
-        return 1;
+          return location.distance(targetLocation);
+        
 
     }
 
@@ -242,8 +246,21 @@ public class DeliveryPerson
      */
     public void act()
     {
-        //TODO  implementar este método
+      if(targetLocation==null){
+          incrementIdleCount();
+      }else{
+         location= location.nextLocation(targetLocation); 
+         if(location.equals(targetLocation)){
+             if(isFree()){
+            notifyPickupArrival();
+        }else{
+            notifyOrderArrival(order);
+            deliverOrder();
+        }
+      }
+        
     }
+}
  
     /**
      * Return details of the delivery person, such as the name, the location,

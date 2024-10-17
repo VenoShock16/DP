@@ -11,14 +11,16 @@ public class DeliveryCompany
 {
     // TODO definir todos sus campos
     private String name;  //nombre de la compañía
-
+    private List<DeliveryPerson> deliveryPersons;
+    private WareHouse wareHouse;
     /**
      * Constructor for objects of class DeliveryCompany
      */
     public DeliveryCompany(String name)
     {
         this.name = name;
-        //TODO implementar el resto del constructor 
+        deliveryPersons= new ArrayList<>();
+        wareHouse= new WareHouse();
 
     }
 
@@ -36,8 +38,9 @@ public class DeliveryCompany
     public List<DeliveryPerson> getDeliveryPersons()
     {       
         //TODO implementar el método 
+        return deliveryPersons;
 
-        return null;
+        
     }
 
     /**
@@ -45,9 +48,7 @@ public class DeliveryCompany
      */
     public List<Order> getOrders()
     {
-        //TODO implementar el método 
-
-        return null;
+        return wareHouse.getOrders();
     }
 
     /**

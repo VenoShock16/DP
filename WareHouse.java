@@ -20,6 +20,7 @@ public class WareHouse
     {
         // initialise instance variables
       orders= new ArrayList<>();
+      
     }
 
     /**
@@ -38,7 +39,7 @@ public class WareHouse
         this.orders.sort(Comparator.comparingInt((Order o) -> o.getDeliveryTime()).thenComparing(Order::getSendingName));
         
     }
-    public List getOrders(){
+    public List<Order> getOrders(){
         return orders;
     }
     
