@@ -37,7 +37,7 @@ public class WareHouse
     public void addOrder(Order order) {
         orders.add(order);
         this.orders.sort(Comparator.comparingInt((Order o) -> o.getDeliveryTime()).thenComparing(Order::getSendingName));
-        
+
     }
     public List<Order> getOrders(){
         return orders;

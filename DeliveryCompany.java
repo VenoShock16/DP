@@ -57,6 +57,8 @@ public class DeliveryCompany
     public void addDeliveryPerson(DeliveryPerson dp)
     {
         //TODO implementar el método 
+        deliveryPersons.add(dp);
+
     }
 
     /**
@@ -66,6 +68,7 @@ public class DeliveryCompany
     public void addOrder(Order order)
     {
         //TODO implementar el método 
+        wareHouse.addOrder(order);
 
     }
 
@@ -76,8 +79,22 @@ public class DeliveryCompany
     private DeliveryPerson getDeliveryPerson()
     {
         //TODO implementar el método 
+    int i=0;
+    boolean enc=false;
+    this.deliveryPersons.sort(Comparator.comparingInt((DeliveryPerson dp) -> dp.getLocation().distance(wareHouse.getLocation())).thenComparing(DeliveryPerson::getName));
 
-        return null;
+    while(i<deliveryPersons.size()&&!enc){
+        if(deliveryPersons.get(i).isFree()){
+            enc=true;
+        }
+        else i++;
+    }
+    if(enc){
+          return   deliveryPersons.get(i);
+    }   
+    else return null;
+
+        
     }
 
     /**
@@ -88,6 +105,15 @@ public class DeliveryCompany
     public boolean requestPickup(Order order)
     {
         //TODO implementar el método 
+       DeliveryPerson dpAux=getDeliveryPerson();
+       if(dpAux==null){
+           return false;
+       }else{
+           dpAux. setPickupLocation(wareHouse.getLocation());
+           
+       }
+       
+        
         return true;
     }
 
@@ -98,10 +124,14 @@ public class DeliveryCompany
     public void arrivedAtPickup(DeliveryPerson dp)
     {
         //TODO implementar el método
+       // if(dp.getLocation()equals()
         //TODO Descomentar siguiente línea cuando esté el método completamente implementado
         //System.out.println("<<<< "+dp + " picks up order to " + order.getDestinationName());
         //TODO el order debe guardar el nombre de la persona de reparto que le ha recogido
         //TODO la persona de reparto debe recoger el pedido
+        
+        
+        
     }
 
     /**
