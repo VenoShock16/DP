@@ -124,7 +124,9 @@ public class DeliveryCompany
     public void arrivedAtPickup(DeliveryPerson dp)
     {
         //TODO implementar el método
-       // if(dp.getLocation()equals()
+        if(dp.getLocation().equals(wareHouse.getLocation())){
+            
+        }
         //TODO Descomentar siguiente línea cuando esté el método completamente implementado
         //System.out.println("<<<< "+dp + " picks up order to " + order.getDestinationName());
         //TODO el order debe guardar el nombre de la persona de reparto que le ha recogido
