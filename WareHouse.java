@@ -48,4 +48,7 @@ public class WareHouse
         return orders.get(0);  
     }else return null;  
 }
+public void setOrders(List<Order>orders){
+    this.orders=orders;
+}
 }

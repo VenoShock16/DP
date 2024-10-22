@@ -123,17 +123,20 @@ public class DeliveryCompany
      */
     public void arrivedAtPickup(DeliveryPerson dp)
     {
+        Order o= wareHouse.getOneOrder();
         //TODO implementar el método
+        if(o!=null&&dp.isFree()){
         if(dp.getLocation().equals(wareHouse.getLocation())){
-            
+            List<Order>O=wareHouse.getOrders();
+            O.remove(o);
+            wareHouse.setOrders(O);
+            dp.pickup(o);
+            System.out.println("<<<<  DeliveryPerson " +dp.getName()+ " at " + dp.getLocation().toString() + " delivers Order from " + o.getSendingName()+ "to: "+ o.getDestination().toString());
+            o.setDeliveryPersonName(dp.getName());
         }
-        //TODO Descomentar siguiente línea cuando esté el método completamente implementado
-        //System.out.println("<<<< "+dp + " picks up order to " + order.getDestinationName());
-        //TODO el order debe guardar el nombre de la persona de reparto que le ha recogido
-        //TODO la persona de reparto debe recoger el pedido
         
         
-        
+    }
     }
 
     /**
@@ -142,6 +145,9 @@ public class DeliveryCompany
      * @param order The order being dropped off.
      */
     public void arrivedAtDestination(DeliveryPerson dp, Order order) {
-        System.out.println(dp + " delivers " + order);
+        if(!dp.isFree()&& dp.getLocation().equals(order.getDestination())){
+        System.out.println("DeliveryPerson" + dp.getName()+ " at "+dp.getLocation().toString()  + " delivers Order at " + order.getDeliveryTime()+ " from" + wareHouse.getLocation().toString()+ "to"+ order.getDestination().toString());
+        
+        }
     }
 }
