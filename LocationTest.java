@@ -47,6 +47,8 @@ public class LocationTest
     @After
     public void tearDown()
     {
+        startLocation=null;
+        destination=null;
     }
 
     /**
@@ -67,9 +69,11 @@ public class LocationTest
     @Test
     public void testAdjacentLocations()
     {
+        
         //TODO implementar este método
         // Testear la adyacencia entre dos localizaciones. Se puede hacer 
         // utilizando llamada al método "nextLocation".
-
+        Location next= startLocation.nextLocation(destination);
+        assertEquals(startLocation.distance(next), 5);
     }
 }

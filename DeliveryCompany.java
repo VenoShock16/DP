@@ -109,7 +109,7 @@ public class DeliveryCompany
        if(dpAux==null){
            return false;
        }else{
-           dpAux. setPickupLocation(wareHouse.getLocation());
+           dpAux.setPickupLocation(wareHouse.getLocation());
            
        }
        

@@ -20,6 +20,7 @@ public class WareHouse
     {
         // initialise instance variables
       orders= new ArrayList<>();
+      location= new Location(5,5);
       
     }
 
