@@ -53,6 +53,9 @@ public class DeliveryPersonTest
     @After
     public void tearDown()
     {
+        dp=null;
+        order=null;
+        
     }
 
     /**
@@ -62,6 +65,8 @@ public class DeliveryPersonTest
     public void testCreation()
     {
         assertEquals(true, dp.isFree());
+        assertEquals("DP1", dp.getName());
+        assertEquals(new Location(0, 0), dp.getLocation());
         //TODO puede ser implementado comparando otros campos
     }
 
@@ -73,24 +78,43 @@ public class DeliveryPersonTest
     public void testPickup()
     {
         //TODO implementar este método
+        dp.pickup(order);
+        assertEquals(false, dp.isFree());
+        assertEquals(new Location(5, 6), dp.getTargetLocation());
     }
 
     /**
      * Test that a delivery person becomes free again after delivering
      * an order.
      */
+    @Test
     public void testDeliverOrder()
     {
         //TODO implementar este método
+        dp.deliverOrder();
+        assertEquals(true, dp.isFree());
+        assertEquals(null, dp.getTargetLocation());
     }
 
     /**
      * Test that a delivery person picks up and delivers an order within
      * a reasonable number of steps.
      */
+    @Test
     public void testDelivery()
     {
         //TODO implementar este método
+        dp.act();
+        dp.act();
+        assertEquals(dp.getLocation(), dp.getTargetLocation());
+        assertEquals(false, dp.isFree());
+        dp.act();
+        dp.act();
+        dp.act();
+        dp.act();
+        assertEquals(dp.getLocation(), dp.getTargetLocation());
+        assertEquals(true, dp.isFree());
+        
     }
 }
 
