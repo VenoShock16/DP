@@ -22,6 +22,10 @@ public class DeliveryPerson
     
     private int ordersDelivered;
     
+    private boolean asigned;
+    
+    
+    
     /**
      * Constructor of class DeliveryPerson
      * @param company The delivery person's company. Must not be null.
@@ -43,6 +47,7 @@ public class DeliveryPerson
         order =null;
         ordersDelivered=0;
         this.name=name;
+        asigned=false;
         //TODO resto de inicializaciones pendientes
     }
 
@@ -86,6 +91,14 @@ public class DeliveryPerson
     public Location getTargetLocation()
     {
         return targetLocation;
+    }
+    public boolean getAsigned()
+    {
+        return asigned;
+    }
+    
+    public void setAsigned(boolean asigned){
+       this.asigned=asigned; 
     }
 
     /**
@@ -199,7 +212,10 @@ public class DeliveryPerson
         setTargetLocation(order.getDestination());
 
     }
-
+    public void setOrder(Order order){
+        this.order=order;
+    }
+    
     /**
      * Deliver the order.
      */
@@ -250,12 +266,14 @@ public class DeliveryPerson
           incrementIdleCount();
       }else{
          location= location.nextLocation(targetLocation); 
+         System.out.println("@@@  DeliveryPerson: "+ name + " moving to: "  + location );
          if(location.equals(targetLocation)){
              if(isFree()){
             notifyPickupArrival();
         }else{
             notifyOrderArrival(order);
             deliverOrder();
+            asigned=false;
         }
       }
         
@@ -270,7 +288,8 @@ public class DeliveryPerson
     public String showFinalInfo()
     {
         //TODO  implementar este método
-        return "";
+        return "DeliveryPerson"+ getName() +" at location "+ getLocation() + " - orders delivered: "+
+        ordersDelivered() +" - non active for: " + getIdleCount() + " times ";
 
     }
 

@@ -13,6 +13,7 @@ public class DeliveryCompany
     private String name;  //nombre de la compañía
     private List<DeliveryPerson> deliveryPersons;
     private WareHouse wareHouse;
+    private List<Order> OrderDelivered;
     /**
      * Constructor for objects of class DeliveryCompany
      */
@@ -21,6 +22,7 @@ public class DeliveryCompany
         this.name = name;
         deliveryPersons= new ArrayList<>();
         wareHouse= new WareHouse();
+        OrderDelivered= new ArrayList<>();
 
     }
 
@@ -42,6 +44,13 @@ public class DeliveryCompany
 
         
     }
+    public List<Order> getOrderDelivered()
+    {       
+        //TODO implementar el método 
+        return OrderDelivered;
+
+        
+    }
 
     /**
      * @return The list of orders.
@@ -57,6 +66,7 @@ public class DeliveryCompany
     public void addDeliveryPerson(DeliveryPerson dp)
     {
         //TODO implementar el método 
+        
         deliveryPersons.add(dp);
 
     }
@@ -81,11 +91,11 @@ public class DeliveryCompany
         //TODO implementar el método 
     int i=0;
     boolean enc=false;
-    this.deliveryPersons.sort(Comparator.comparingInt((DeliveryPerson dp) -> dp.getLocation().distance(wareHouse.getLocation())).thenComparing(DeliveryPerson::getName));
-
+    Collections.sort(deliveryPersons, new  ComparadorCercaniaNombreDelivery());
     while(i<deliveryPersons.size()&&!enc){
-        if(deliveryPersons.get(i).isFree()){
+        if(deliveryPersons.get(i).isFree()&&deliveryPersons.get(i).getAsigned()==false){
             enc=true;
+            deliveryPersons.get(i).setAsigned(enc);
         }
         else i++;
     }
@@ -110,8 +120,9 @@ public class DeliveryCompany
            return false;
        }else{
            dpAux.setPickupLocation(wareHouse.getLocation());
+            System.out.println("<<<< DeliveryPerson " +dpAux.getName() + " at location " +dpAux.getLocation() + " go to pick up order from  " +order.getSendingName()+ " at location " +dpAux.getTargetLocation());
            
-       }
+        }
        
         
         return true;
@@ -128,10 +139,11 @@ public class DeliveryCompany
         if(o!=null&&dp.isFree()){
         if(dp.getLocation().equals(wareHouse.getLocation())){
             List<Order>O=wareHouse.getOrders();
+            OrderDelivered.add(o);
             O.remove(o);
             wareHouse.setOrders(O);
             dp.pickup(o);
-            System.out.println("<<<<  DeliveryPerson " +dp.getName()+ " at " + dp.getLocation().toString() + " delivers Order from " + o.getSendingName()+ "to: "+ o.getDestination().toString());
+            System.out.println("<<<<  DeliveryPerson " +dp.getName()+ " at " + dp.getLocation() + " Picks up Order from " + o.getSendingName()+ " to: "+ o.getDestination());
             o.setDeliveryPersonName(dp.getName());
         }
         
@@ -146,7 +158,7 @@ public class DeliveryCompany
      */
     public void arrivedAtDestination(DeliveryPerson dp, Order order) {
         if(!dp.isFree()&& dp.getLocation().equals(order.getDestination())){
-        System.out.println("DeliveryPerson" + dp.getName()+ " at "+dp.getLocation().toString()  + " delivers Order at " + order.getDeliveryTime()+ " from" + wareHouse.getLocation().toString()+ "to"+ order.getDestination().toString());
+        System.out.println("<<<<DeliveryPerson " + dp.getName()+ " at location "+dp.getLocation()  + " delivers Order at: " + order.getDeliveryTime()+ " from: " + order.getSendingName()+ " to: "+ order.getDestinationName());
         
         }
     }

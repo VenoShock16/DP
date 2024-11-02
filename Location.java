@@ -67,7 +67,7 @@ public class Location
         // va pasando la persona que reparte hasta llegar al destino
         Location aux= new Location(getX(),getY());
         if(getX()!=destination.getX()){
-            if(getX()>destination.getX()){
+            if(getX()<destination.getX()){
                 aux.setX(getX()+1);
             }
             else aux.setX(getX()-1);

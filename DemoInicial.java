@@ -101,6 +101,7 @@ public class DemoInicial
      */
     private void runSimulation() {
         List<Order> orders = company.getOrders();
+        Collections.sort(orders, new ComparadorNombreRecibe());
         //TODO: Ordenar los pedidos ascendentemente por su hora de llegada y 
         //en caso de empate por el nombre de la persona de destino
         for(Order order : orders) {
@@ -115,13 +116,19 @@ public class DemoInicial
      * Initial info is showed with the information about delivery persons and orders
      */
     private void showInicialInfo() {
-
+        
+        List<DeliveryPerson> dp= company.getDeliveryPersons();
+        Collections.sort(dp, new ComparadorNombreDeliveryPerson());
         System.out.println("--->> Simulation of the company: "+company.getName()+" <<---");
         System.out.println("-->> Delivery persons of the company <<--");
         System.out.println("-->> ------------------------------- <<--");
         //TODO ordenar (por su nombre) y mostrar los objetos delivery persons
-        //Collections.sort(lista de objetos DeliveryPersons, new ComparadorNombreDeliveryPerson());
-
+        for(DeliveryPerson person:dp){
+            System.out.println(person);
+        }
+        
+        List<Order> o= company.getOrders();
+        Collections.sort(o, new ComparadorOrderDeliveryPersonName());
         System.out.println(" ");        
         System.out.println("-->> Orders to be picked up <<--");
         System.out.println("-->> ---------------------- <<--");
@@ -129,8 +136,10 @@ public class DemoInicial
         //para ordenar una colección aplicando un comparador, esta sería 
         //la sintaxis (suponiendo que "orders" es una colección donde
         //la compañía almacena los pedidos):
-        //Collections.sort(orders, new ComparadorOrderDeliveryPersonName());
-
+        
+                for(Order  order : o) {
+            System.out.println(order);
+        }
 
         System.out.println(" ");        
         System.out.println("-->> Simulation start <<--");
@@ -141,8 +150,11 @@ public class DemoInicial
     /**
      * Final info is showed with the information about delivery persons and orders
      */
+    
+    
     private void showFinalInfo() {
-
+        List<DeliveryPerson> dp= company.getDeliveryPersons();
+        Collections.sort(dp, new ComparadorPedidosNombre());
         System.out.println(" ");
         System.out.println("-->> ----------------- <<--");
         System.out.println("-->> End of simulation <<--");        
@@ -153,12 +165,20 @@ public class DemoInicial
         System.out.println("-->> ---------------------------------- <<--");
         //TODO ordenar (por número de pedidos entregados y si empate por nombre) 
         // y mostrar los objetos delivery persons
-
+        for(DeliveryPerson person:dp){
+            System.out.println(person.showFinalInfo());
+        }
+        List<Order> o= company.getOrderDelivered();
+        Collections.sort(o, new ComparadorNombreRecibe());
         System.out.println(" ");
         System.out.println("-->> Orders final information <<--");
         System.out.println("-->> ------------------------ <<--");
         //TODO ordenar (por hora de entrega y si empate por nombre de la persona 
         //  que recibe el pedido) y mostrar los pedidos
-
+        for(Order  order : o) {
+            System.out.println(order.showFinalInfo());
+        
+        }
     }
 }
+

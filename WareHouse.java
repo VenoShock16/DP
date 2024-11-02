@@ -37,8 +37,7 @@ public class WareHouse
     
     public void addOrder(Order order) {
         orders.add(order);
-        this.orders.sort(Comparator.comparingInt((Order o) -> o.getDeliveryTime()).thenComparing(Order::getSendingName));
-
+        
     }
     public List<Order> getOrders(){
         return orders;
@@ -46,6 +45,9 @@ public class WareHouse
     
     public Order getOneOrder() {
     if (!orders.isEmpty()) {
+        List<Order> o= getOrders();
+        
+        setOrders(o);
         return orders.get(0);  
     }else return null;  
 }

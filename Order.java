@@ -12,7 +12,7 @@ public class Order
     private Location location;
     private Location destination;
     private int deliveryTime;
-    private Float weight;
+    private double weight;
     private String destinationName;
     private String deliveryPersonName;
     
@@ -30,14 +30,20 @@ public class Order
     double weight, String destinationName)
     {
         //TODO modificar el constructor o crear otro constructor si necesario
-        if(location == null) {
-            throw new NullPointerException("Location location");
-        }
+      //  if(location == null) {
+       //     throw new NullPointerException("Location location");
+     //   }
         if(destination == null) {
             throw new NullPointerException("Destination location");
         }
-        this.location = location;
+        //this.location = location;
+        this.location= new Location(5,5);
         this.destination = destination;
+        this.sendingName=sendingName;
+        this.deliveryTime=deliveryTime;
+        this.weight= weight;
+        this.destinationName=destinationName;
+        
         //incluir inicialización del resto de campos
     }
 
@@ -77,15 +83,20 @@ public class Order
     {
      //TODO Debe poder devolver la localización donde hay que llevar el Order.
         return sendingName;
-    }    
+    } 
+    public String getDestinationName()
+    {
+     //TODO Debe poder devolver la localización donde hay que llevar el Order.
+        return destinationName;
+    }
     /**
      * Return details of the passenger, such as where it is.
      * @return A string representation of the passenger.
      */
     public String toString()
     {
-        return "Order "+"info a decidir"+" travelling from " +
-        location + " to " + destination;
+        return "Order from:  "+ sendingName + " to: "  + destinationName + " at: "  + deliveryTime + " weight: "  + weight
+        + " from: "  + location + " to: "  + destination;
     }
 
     /**
@@ -95,7 +106,8 @@ public class Order
     public String showFinalInfo()
     {
         // TODO
-        return "";
+        return " Order Delivered at: "+ getDeliveryTime() +" by:  "+ getDeliveryPersonName() + " to: "+
+        getDestinationName() +" from: " + getSendingName();
     }
     
 
