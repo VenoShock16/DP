@@ -1,21 +1,7 @@
-Project: taxi-company-stage-one
-Authors: David J. Barnes and Michael Kölling
+ José Pulido Delgado
 
-This project is part of the material for chapter 14 of the book
+Para ejecutar una simulación, se descomenta dentro de la clase DeliveryDemo el caso que deseas ejecutar y ejecutas el main situado en esa misma clase.
 
-   Objects First with Java - A Practical Introduction using BlueJ
-   Sixth edition
-   David J. Barnes and Michael Kölling
-   Pearson Education, 2016
+Mi programa funciona correctamente sin necesidad de intervención del usuario, además cada clase viene acompañada de un juego de pruebas las cuales ejecutan los módulos para que se pueda  comprobar su correcta funcionalidad, siendo estas pruebas de tipo unitario.
 
-This project provides a partial implementation of a simulation of
-taxis operating on a city grid to pick up and transport passengers.
-    
-This is the third stage of this project. It illustrates the 
-implementation of a first stage of the project.
-
-How to start this project:
-    Create a Demo object and invoke its demo method.
-    A single taxi carries a single passenger to their destination.
-
-The test classes provide a little testing of basic functionality.
+ Tambien he implementado diversos comparadores de DelyveryPersons y Orders  para posteriormente llamarlas mediante el método  Colections.sort Por último mi codigo tiene una documentación interna adecuada y hay comentarios que explican el funcionamiento de cada modulo con mas detalle. Por último, se ha implementado el uso  del repositorio en GitHub : https://github.com/VenoShock16/DP

@@ -15,6 +15,9 @@ public class Order
     private double weight;
     private String destinationName;
     private String deliveryPersonName;
+    private Surcharge surcharge;
+    private Urgency urgency;
+    
     
     /**
      * Constructor for objects of class Order
@@ -27,12 +30,9 @@ public class Order
      * @throws NullPointerException If either location is null.
      */
     public Order(String sendingName, Location location, Location destination, int deliveryTime, 
-    double weight, String destinationName)
+    double weight, String destinationName,Surcharge surcharge, Urgency urgency)
     {
-        //TODO modificar el constructor o crear otro constructor si necesario
-      //  if(location == null) {
-       //     throw new NullPointerException("Location location");
-     //   }
+       
         if(destination == null) {
             throw new NullPointerException("Destination location");
         }
@@ -43,8 +43,10 @@ public class Order
         this.deliveryTime=deliveryTime;
         this.weight= weight;
         this.destinationName=destinationName;
+        this.surcharge= surcharge;
+        this.urgency=urgency;
         
-        //incluir inicialización del resto de campos
+        
     }
 
     /**
@@ -110,5 +112,12 @@ public class Order
         getDestinationName() +" from: " + getSendingName();
     }
     
+    public int charge(){
+        return surcharge.getValor();
+    }
+    
+    public int calculateEvaluationDP(){
+        return 0;
+    }
 
 }
