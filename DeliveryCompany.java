@@ -55,7 +55,7 @@ public class DeliveryCompany
     /**
      * @return The list of orders.
      */
-    public List<Order> getOrders()
+    public TreeSet<Order> getOrders()
     {
         return wareHouse.getOrders();
     }
@@ -138,7 +138,7 @@ public class DeliveryCompany
         //TODO implementar el método
         if(o!=null&&dp.isFree()){
         if(dp.getLocation().equals(wareHouse.getLocation())){
-            List<Order>O=wareHouse.getOrders();
+            TreeSet<Order>O=wareHouse.getOrders();
             OrderDelivered.add(o);
             O.remove(o);
             wareHouse.setOrders(O);

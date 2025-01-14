@@ -1,3 +1,5 @@
+import java.util.*;
+
 /**
  * Model the common elements of delivery persons.
  * 
@@ -18,11 +20,19 @@ public class DeliveryPerson
     //name of the delivery person
     private String name; //TODO cambiar a private
     //TODO añadir campos necesarios
-    private Order order;
+    private TreeSet<Order> ordersToDeliver;
+    
+    private TreeSet<Order> DeliveredOrderSet;
     
     private int ordersDelivered;
     
     private boolean asigned;
+    
+    private int valuation;
+    
+    private int maxLoad;
+    
+    private int totalCharged;
     
     
     
@@ -44,10 +54,14 @@ public class DeliveryPerson
         this.location = location;
         targetLocation = null;
         idleCount = 0;
-        order =null;
+        ordersToDeliver =new TreeSet<Order>(new ComparadorOrderWareHouse());
+        DeliveredOrderSet=new TreeSet<Order>(new ComparadorOrderWareHouse());
         ordersDelivered=0;
         this.name=name;
         asigned=false;
+        valuation=0;
+        totalCharged=0;
+        maxLoad=5;
         //TODO resto de inicializaciones pendientes
     }
 
@@ -174,7 +188,7 @@ public class DeliveryPerson
      */
     public boolean isFree()
     {
-      if(order!=null){
+      if(!ordersToDeliver.isEmpty()){
           return false;
         
       }else return true;
@@ -207,24 +221,46 @@ public class DeliveryPerson
      */
     public void pickup(Order order)
     {
-        //TODO  implementar este método
-        this.order=order;
+        //El order que entra es el que esté en la primera posición de ordersToDeliver
         setTargetLocation(order.getDestination());
 
     }
-    public void setOrder(Order order){
-        this.order=order;
-    }
+    
     
     /**
      * Deliver the order.
      */
     public void deliverOrder()
     {
-        //TODO  implementar este método
-        order=null;
+        Order o= ordersToDeliver.first();
+        AddToDeliveredOrderSet(o);
+        ordersToDeliver.remove(o);
         clearTargetLocation();
         incrementOrdersDelivered();
+        
+        incTotalCharged(o);
+        incValuation(o);
+        
+        if(!isFree()){
+            setTargetLocation(ordersToDeliver.first().getDestination());
+        }
+         
+        
+    }
+    //Se usa para el CommonDP
+    public void deliverOrder(Order o)
+    {
+        AddToDeliveredOrderSet(o);
+        ordersToDeliver.remove(o);
+        clearTargetLocation();
+        incrementOrdersDelivered();
+        
+        incTotalCharged(o);
+        incValuation(o);
+        
+        if(!isFree()){
+            setTargetLocation(ordersToDeliver.first().getDestination());
+        }
          
         
     }
@@ -271,8 +307,8 @@ public class DeliveryPerson
              if(isFree()){
             notifyPickupArrival();
         }else{
-            notifyOrderArrival(order);
-            deliverOrder();
+            notifyOrderArrival(ordersToDeliver.first());
+            deliverOrder();//Aqui se hace el incremento de dinero y valoracion.
             asigned=false;
         }
       }
@@ -292,5 +328,28 @@ public class DeliveryPerson
         ordersDelivered() +" - non active for: " + getIdleCount() + " times ";
 
     }
-
+    
+    public void incTotalCharged(Order o){
+        totalCharged=totalCharged+o.charge();
+    }
+    
+    public int obtainTotalCharge(){
+        return totalCharged;
+    }
+    
+    public void incValuation(Order o){
+        valuation=valuation+o.calculateEvaluationDP();
+    }
+    
+    public void setMaxLoad(int i){
+        maxLoad=i;
+    }
+    public TreeSet getOrdersToDeliver(){
+        return ordersToDeliver;
+    }
+    
+    public void AddToDeliveredOrderSet(Order o){
+        DeliveredOrderSet.add(o);
+    }
+    
 }

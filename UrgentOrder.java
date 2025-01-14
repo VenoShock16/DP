@@ -17,6 +17,7 @@ public class UrgentOrder extends Order
     double weight, String destinationName,Surcharge surcharge, Urgency urgency)
     {
        super(sendingName, location, destination, deliveryTime, weight, destinationName,surcharge, urgency);
+       
     }
 
     @Override

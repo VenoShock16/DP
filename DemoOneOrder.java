@@ -89,7 +89,8 @@ public class DemoOneOrder
      * @throws IllegalStateException If a pickup cannot be found
      */
     private void runSimulation() {
-        List<Order> orders = company.getOrders();
+        TreeSet<Order> aux = company.getOrders();
+        List<Order> orders = new ArrayList<Order> (aux);
         Collections.sort(orders, new ComparadorNombreRecibe());
         //TODO: Ordenar los pedidos ascendentemente por su hora de llegada y 
         //en caso de empate por el nombre de la persona de destino

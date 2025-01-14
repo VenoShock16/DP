@@ -119,5 +119,8 @@ public class Order
     public int calculateEvaluationDP(){
         return 0;
     }
+    public Urgency getUrgency(){
+        return urgency;
+    }
 
 }

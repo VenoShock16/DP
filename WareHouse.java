@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.TreeSet;
 import java.util.Collections;
 import java.util.*;
 /**
@@ -10,18 +11,19 @@ import java.util.*;
  */
 public class WareHouse
 {
-    // instance variables - replace the example below with your own
     private Location location;
-    private List<Order> orders;
+    private TreeSet<Order> orders;
+    private TreeMap<Order,DeliveryPerson> deliveredOrders;
     /**
      * Constructor for objects of class WareHouse
      */
     public WareHouse()
     {
+     
         // initialise instance variables
-      orders= new ArrayList<>();
+      orders= new TreeSet<Order>(new ComparadorOrderWareHouse());
       location= new Location(5,5);
-      
+      deliveredOrders= new TreeMap<>(new ComparadorRemitenteHora());
     }
 
     /**
@@ -39,19 +41,27 @@ public class WareHouse
         orders.add(order);
         
     }
-    public List<Order> getOrders(){
+    public TreeSet<Order> getOrders(){
         return orders;
     }
     
     public Order getOneOrder() {
     if (!orders.isEmpty()) {
-        List<Order> o= getOrders();
-        
-        setOrders(o);
-        return orders.get(0);  
+        TreeSet<Order> o= getOrders(); 
+        return orders.first(); 
     }else return null;  
 }
-public void setOrders(List<Order>orders){
+    public void setOrders(TreeSet<Order>orders){
     this.orders=orders;
 }
+
+    public void addDeliveredOrder(Order order, DeliveryPerson deliveryPerson) {
+        deliveredOrders.put(order, deliveryPerson);
+        
+    }
+    
+    public TreeMap<Order, DeliveryPerson> getDeliveredOrders(){
+        return deliveredOrders;
+    }
+
 }
