@@ -30,7 +30,7 @@ public class Order
      * @throws NullPointerException If either location is null.
      */
     public Order(String sendingName, Location location, Location destination, int deliveryTime, 
-    double weight, String destinationName,Surcharge surcharge, Urgency urgency)
+    double weight, String destinationName, Urgency urgency)
     {
        
         if(destination == null) {
@@ -43,7 +43,6 @@ public class Order
         this.deliveryTime=deliveryTime;
         this.weight= weight;
         this.destinationName=destinationName;
-        this.surcharge= surcharge;
         this.urgency=urgency;
         
         
@@ -122,5 +121,16 @@ public class Order
     public Urgency getUrgency(){
         return urgency;
     }
-
+    public String ShowInitialInfo(){
+        return "" ;
+    }
+    public double getWeight(){
+        return weight;
+    }
+    public Location getLocation(){
+        return location;
+    }
+    public void setSurcharge(Surcharge surcharge){
+        this.surcharge=surcharge;
+    }
 }

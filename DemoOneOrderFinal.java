@@ -1,3 +1,4 @@
+
 import java.util.*;
 
 /**
@@ -8,21 +9,22 @@ import java.util.*;
  * 
  * @author David J. Barnes and Michael Kölling
  * @version 2016.02.29
- * @version 2024.10.07 DP classes
+ * @version 2024.11.13 DP classes
  */
-public class DemoOneOrder
+public class DemoOneOrderFinal
 {
     DeliveryCompany company;
     private List<DeliveryPerson> actors; //simulation's actors, they are the delivery persons
-                                         //of the company
+    //of the company
 
     /**
      * Constructor for objects of class DemoOneOrder
      */
-    public DemoOneOrder()
+    public DemoOneOrderFinal()
     {
         company = new DeliveryCompany("Compañía DP Delivery Cáceres");
         actors = new ArrayList<>();
+
         reset();
     }
 
@@ -70,8 +72,9 @@ public class DemoOneOrder
      * DeliveryPersons are created and added to the company
      */
     private void createDeliveryPersons() {
-        DeliveryPerson dp = new DeliveryPerson(company, new Location(10, 10),"DP1");
-        company.addDeliveryPerson(dp);
+        DeliveryPerson dp1 = new SpecialDP(company, new Location(3, 3),"DP2");
+        
+        company.addDeliveryPerson(dp1);
         actors.addAll(company.getDeliveryPersons());
     }
 
@@ -79,9 +82,12 @@ public class DemoOneOrder
      * Orders are created and added to the company
      */
     private void createOrders() {
-        Order order = new Order("Lucy", new Location(6, 6),
-                new Location(5,2),10, 1.2, "Decathon Cáceres");
-        company.addOrder(order);
+        //all the orders are created in the warehouse location
+        //Parameters: sendingName, location, destination, deliveryTime, 
+        //weight, destinationName, urgency, surchage (only for Urgent and NonUrgent orders)
+        Location whLocation = company.getWareHouse().getLocation();
+        Order order1 = new MedicalOrder("Kevin", whLocation, new Location(14,2),11, 2.2, "Ruta de la Plata",Urgency.EMERGENCY);
+        company.addOrder(order1);
     }
 
     /**
@@ -89,80 +95,86 @@ public class DemoOneOrder
      * @throws IllegalStateException If a pickup cannot be found
      */
     private void runSimulation() {
-        TreeSet<Order> aux = company.getOrders();
-        List<Order> orders = new ArrayList<Order> (aux);
-        Collections.sort(orders, new ComparadorNombreRecibe());
-        //TODO: Ordenar los pedidos ascendentemente por su hora de llegada y 
-        //en caso de empate por el nombre de la persona de destino
-        for(Order order : orders) {
+        //Obtener los orders desde wareHouse
+        //ya vienen ordenados por su tipo de urgency, hora de llegada y destinationName
+        //TODO colección   orders = company.getOrders();
+        TreeSet<Order> orders = company.getOrders();
+        Iterator<Order> it = orders.iterator();
+        while(it.hasNext()) {
+            Order order = it.next();
             if(!company.requestPickup(order)) {
                 throw new IllegalStateException("Failed to find a pickup.");        
             }
         }
-
     }
 
     /**
      * Initial info is showed with the information about delivery persons and orders
      */
     private void showInicialInfo() {
-        
-        List<DeliveryPerson> dp= company.getDeliveryPersons();
-        Collections.sort(dp, new ComparadorNombreDeliveryPerson());
+        //Obtenemos los objetos DeliveryPerson de la compañía
+        List<DeliveryPerson> deliveryPersons = company.getDeliveryPersons();
+        Collections.sort(deliveryPersons, new ComparadorNombreDeliveryPerson());
+        //Obtenemos los objetos Orders del almacén (vienen ya ordenados)
+        //TODO colección  orders = company.getOrders();
+
         System.out.println("--->> Simulation of the company: "+company.getName()+" <<---");
         System.out.println("-->> Delivery persons of the company <<--");
         System.out.println("-->> ------------------------------- <<--");
         //TODO ordenar (por su nombre) y mostrar los objetos delivery persons
-        for(DeliveryPerson person:dp){
-            System.out.println(person);
+        for(DeliveryPerson  dp : deliveryPersons) {
+            System.out.println(dp);
         }
-        
-        List<Order> o= company.getOrders();
-        Collections.sort(o, new ComparadorOrderDeliveryPersonName());
-        System.out.println(" ");        
+            
+        TreeSet<Order> orders= company.getOrders();
         System.out.println("-->> Orders to be picked up <<--");
         System.out.println("-->> ---------------------- <<--");
-        //TODO ordenar (por el nombre de la persona que envía) y mostrar los pedidos
-        //para ordenar una colección aplicando un comparador, esta sería 
-        //la sintaxis (suponiendo que "orders" es una colección donde
-        //la compañía almacena los pedidos):
-        
-                for(Order  order : o) {
-            System.out.println(order);
+        Iterator<Order> it = orders.iterator();
+        while(it.hasNext()) {
+            Order order = it.next();
+            System.out.println(order.ShowInitialInfo());
         }
-
-        System.out.println(" ");        
+        System.out.println("");
         System.out.println("-->> Simulation start <<--");
         System.out.println("-->> ---------------- <<--");
-        System.out.println(" ");        
+        System.out.println("");        
     }
 
     /**
      * Final info is showed with the information about delivery persons and orders
      */
     private void showFinalInfo() {
-        List<DeliveryPerson> dp= company.getDeliveryPersons();
-        Collections.sort(dp, new ComparadorPedidosNombre());
-        System.out.println(" ");
+        //Obtenemos los objetos DeliveryPerson de la compañía
+        List<DeliveryPerson> deliveryPersons = company.getDeliveryPersons();
+        Collections.sort(deliveryPersons, new ComparadorPedidosNombre());
+        //Obtenemos los orders entregados con sus objetos DeliveryPerson asociados
+        //desde el almacén (vienen ya ordenados)
+        //TODO declarar colección ordersDelivered = company.getWareHouse().getDeliveredOrders();
+
+        System.out.println("");
         System.out.println("-->> ----------------- <<--");
         System.out.println("-->> End of simulation <<--");        
         System.out.println("-->> ----------------- <<--");
-        System.out.println(" ");
+        System.out.println("");
 
         System.out.println("-->> Delivery persons final information <<--");
         System.out.println("-->> ---------------------------------- <<--");
         //TODO ordenar (por número de pedidos entregados y si empate por nombre) 
-        // y mostrar los objetos delivery persons
-        for(DeliveryPerson person:dp){
-            System.out.println(person.showFinalInfo());
+        // y mostrar los objetos delivery persons        
+        for(DeliveryPerson  dp : deliveryPersons) {
+            System.out.println(dp.showFinalInfo());
         }
+        
         List<Order> o= company.getOrderDelivered();
-        Collections.sort(o, new ComparadorNombreRecibe());
-        System.out.println(" ");
+        Collections.sort(o, new ComparadorRemitenteHora());
+        System.out.println("");
         System.out.println("-->> Orders final information <<--");
         System.out.println("-->> ------------------------ <<--");
-        //TODO ordenar (por hora de entrega y si empate por nombre de la persona 
-        //  que recibe el pedido) y mostrar los pedidos
+        //TODO los pedidos entregados vienen en orden creciente por sendingName y  
+        // en caso de empate por la hora de entrega y mostrar los pedidos y quién 
+        // lo entregó
+        //Mostrar los orders obtenidos
+        
         for(Order  order : o) {
             System.out.println(order.showFinalInfo());
         

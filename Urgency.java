@@ -34,5 +34,9 @@ public enum Urgency
     {
     this.valor=valor;
     }
+    
+    public String Show(){
+        return "<urgency:  "+ nombre + "(value: "+ valor+ ")>";
+    }
 
 }

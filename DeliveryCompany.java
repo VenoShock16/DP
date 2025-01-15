@@ -86,16 +86,23 @@ public class DeliveryCompany
      * Find a the most closed free delivery person to the whare house's location, if any.
      * @return A free delivery person, or null if there is none.
      */
-    private DeliveryPerson getDeliveryPerson()
+    private DeliveryPerson getDeliveryPerson(Order o)
     {
         //TODO implementar el método 
     int i=0;
     boolean enc=false;
     Collections.sort(deliveryPersons, new  ComparadorCercaniaNombreDelivery());
     while(i<deliveryPersons.size()&&!enc){
-        if(deliveryPersons.get(i).isFree()&&deliveryPersons.get(i).getAsigned()==false){
+        if(deliveryPersons.get(i).getOcupation()<deliveryPersons.get(i).getMaxLoad() && deliveryPersons.get(i).getAsigned()==false){// Mira si cabe y si no esta ya en reparto
+            if(DeliveryValido(o,deliveryPersons.get(i))){
+            deliveryPersons.get(i).incOcupation();
             enc=true;
-            deliveryPersons.get(i).setAsigned(enc);
+            if(deliveryPersons.get(i).getOcupation()==deliveryPersons.get(i).getMaxLoad()){
+                deliveryPersons.get(i).setAsigned(enc);
+                
+            }
+            }
+            else i++;
         }
         else i++;
     }
@@ -106,6 +113,27 @@ public class DeliveryCompany
 
         
     }
+    
+    public boolean DeliveryValido(Order o, DeliveryPerson dp){
+        int u= o.getUrgency().getValor();
+        boolean enc=false;
+        switch (u){
+            case 1:// NONESSENTIAL
+            if(dp.getMaxLoad()==4)
+            enc= true;
+            break;
+            case 3://IMPORTANT
+            if(dp.getMaxLoad()==4||dp.getMaxLoad()==2)
+            enc= true;
+            break;
+            case 5://EMERGENCY
+             if(dp.getMaxLoad()==1)
+            enc= true; 
+            break;
+            
+        }
+        return enc;
+    }
 
     /**
      * Request a pickup for the given order.
@@ -114,14 +142,21 @@ public class DeliveryCompany
      */
     public boolean requestPickup(Order order)
     {
-        //TODO implementar el método 
-       DeliveryPerson dpAux=getDeliveryPerson();
+   
+       DeliveryPerson dpAux=getDeliveryPerson(order);
        if(dpAux==null){
            return false;
        }else{
            dpAux.setPickupLocation(wareHouse.getLocation());
             System.out.println("<<<< DeliveryPerson " +dpAux.getName() + " at location " +dpAux.getLocation() + " go to pick up order from  " +order.getSendingName()+ " at location " +dpAux.getTargetLocation());
-           
+            TreeSet<Order>ToDeliver=dpAux.getOrdersToDeliver();
+            TreeSet<Order>O=wareHouse.getOrders();
+            OrderDelivered.add(order);
+            ToDeliver.add(order);
+            dpAux.setOrdersToDeliver(ToDeliver);
+            O.remove(order);
+            wareHouse.setOrders(O);
+            
         }
        
         
@@ -134,21 +169,22 @@ public class DeliveryCompany
      */
     public void arrivedAtPickup(DeliveryPerson dp)
     {
-        Order o= wareHouse.getOneOrder();
-        //TODO implementar el método
-        if(o!=null&&dp.isFree()){
+        
+        
         if(dp.getLocation().equals(wareHouse.getLocation())){
-            TreeSet<Order>O=wareHouse.getOrders();
-            OrderDelivered.add(o);
-            O.remove(o);
-            wareHouse.setOrders(O);
+            
+            TreeSet<Order>aux=dp.getOrdersToDeliver();
+            for(Order o: aux){
             dp.pickup(o);
             System.out.println("<<<<  DeliveryPerson " +dp.getName()+ " at " + dp.getLocation() + " Picks up Order from " + o.getSendingName()+ " to: "+ o.getDestination());
             o.setDeliveryPersonName(dp.getName());
+            }
+            dp.setWorking(true);
+            
         }
         
         
-    }
+    
     }
 
     /**
@@ -157,9 +193,12 @@ public class DeliveryCompany
      * @param order The order being dropped off.
      */
     public void arrivedAtDestination(DeliveryPerson dp, Order order) {
-        if(!dp.isFree()&& dp.getLocation().equals(order.getDestination())){
+        if(dp.getAsigned()&& dp.getLocation().equals(order.getDestination())){
         System.out.println("<<<<DeliveryPerson " + dp.getName()+ " at location "+dp.getLocation()  + " delivers Order at: " + order.getDeliveryTime()+ " from: " + order.getSendingName()+ " to: "+ order.getDestinationName());
         
         }
+    }
+    public WareHouse getWareHouse(){
+        return wareHouse;
     }
 }

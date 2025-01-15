@@ -43,4 +43,13 @@ public class ExpressDP extends DeliveryPerson
         
     }
 }
+@Override
+ public String showFinalInfo()
+    {
+        //TODO  implementar este método
+        return "ExpressDP"+ getName() +" at location "+ getLocation() + " - orders delivered: "+
+        ordersDelivered() +" - non active for: " + getIdleCount() + " times  - total to be collected: "
+        + obtainTotalCharge() + " -Valuation: "+ obtainValuation();
+
+    }
 }

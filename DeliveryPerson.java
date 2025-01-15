@@ -34,7 +34,9 @@ public class DeliveryPerson
     
     private int totalCharged;
     
+    private int ocupation;
     
+    private boolean Working;
     
     /**
      * Constructor of class DeliveryPerson
@@ -62,6 +64,8 @@ public class DeliveryPerson
         valuation=0;
         totalCharged=0;
         maxLoad=5;
+        ocupation=0;
+        Working=false;
         //TODO resto de inicializaciones pendientes
     }
 
@@ -71,6 +75,20 @@ public class DeliveryPerson
     public String getName()
     {
         return name;
+    }
+    
+    public int getOcupation(){
+        return ocupation;
+    }
+    public int getMaxLoad(){
+        return maxLoad;
+    }
+    
+    public void incOcupation(){
+        ocupation++;
+    }
+    public void decOcupation(){
+        ocupation--;
     }
 
     /**
@@ -298,22 +316,35 @@ public class DeliveryPerson
      */
     public void act()
     {
+        
       if(targetLocation==null){
           incrementIdleCount();
       }else{
          location= location.nextLocation(targetLocation); 
          System.out.println("@@@  DeliveryPerson: "+ name + " moving to: "  + location );
          if(location.equals(targetLocation)){
-             if(isFree()){
+             if(!Working){
             notifyPickupArrival();
         }else{
             notifyOrderArrival(ordersToDeliver.first());
             deliverOrder();//Aqui se hace el incremento de dinero y valoracion.
+            if(isFree())
             asigned=false;
         }
       }
         
     }
+}
+
+public boolean getWorking(){
+    return Working;
+}
+public void setWorking(boolean e){
+     Working=e;
+}
+
+public void setOrdersToDeliver(TreeSet<Order>o){
+    ordersToDeliver=o;
 }
  
     /**
@@ -325,7 +356,8 @@ public class DeliveryPerson
     {
         //TODO  implementar este método
         return "DeliveryPerson"+ getName() +" at location "+ getLocation() + " - orders delivered: "+
-        ordersDelivered() +" - non active for: " + getIdleCount() + " times ";
+        ordersDelivered() +" - non active for: " + getIdleCount() + " times  - total to be collected: "
+        + totalCharged + " -Valuation: "+ valuation;
 
     }
     
@@ -335,6 +367,9 @@ public class DeliveryPerson
     
     public int obtainTotalCharge(){
         return totalCharged;
+    }
+    public int obtainValuation(){
+        return valuation;
     }
     
     public void incValuation(Order o){
