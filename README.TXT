@@ -4,4 +4,4 @@ Para ejecutar una simulación, se descomenta dentro de la clase DeliveryDemo el 
 
 Mi programa funciona correctamente sin necesidad de intervención del usuario, además cada clase viene acompañada de un juego de pruebas las cuales ejecutan los módulos para que se pueda  comprobar su correcta funcionalidad, siendo estas pruebas de tipo unitario.
 
- Tambien he implementado diversos comparadores de DelyveryPersons y Orders  para posteriormente llamarlas mediante el método  Colections.sort Por último mi codigo tiene una documentación interna adecuada y hay comentarios que explican el funcionamiento de cada modulo con mas detalle. Por último, se ha implementado el uso  del repositorio en GitHub : https://github.com/VenoShock16/DP
+ Tambien he implementado diversos comparadores de DelyveryPersons y Orders  para posteriormente llamarlas mediante el método  Colections.sort Por último mi codigo tiene una documentación interna adecuada y hay comentarios que explican el funcionamiento de cada modulo con mas detalle. Por último, se ha implementado el uso  del repositorio en GitHub : https://github.com/VenoShock16/DP.git

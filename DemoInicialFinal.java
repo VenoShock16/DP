@@ -107,7 +107,8 @@ public class DemoInicialFinal
      */
        private void runSimulation() {
         TreeSet<Order> orders = company.getOrders();
-        Iterator<Order> it = orders.iterator();
+        TreeSet<Order> ordersCopy = new TreeSet<>(orders);
+       Iterator<Order> it = ordersCopy.iterator();
         while(it.hasNext()) {
             Order order = it.next();
             if(!company.requestPickup(order)) {
@@ -181,7 +182,10 @@ public class DemoInicialFinal
         // en caso de empate por la hora de entrega y mostrar los pedidos y quién 
         // lo entregó
         //Mostrar los orders obtenidos
+         for(Order  order : o) {
+            System.out.println(order.showFinalInfo());
         
+        }
 
     }
 }

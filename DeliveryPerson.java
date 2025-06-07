@@ -241,6 +241,7 @@ public class DeliveryPerson
     {
         //El order que entra es el que esté en la primera posición de ordersToDeliver
         setTargetLocation(order.getDestination());
+        setAsigned(true);
 
     }
     
@@ -258,7 +259,7 @@ public class DeliveryPerson
         
         incTotalCharged(o);
         incValuation(o);
-        
+        setWorking(false);
         if(!isFree()){
             setTargetLocation(ordersToDeliver.first().getDestination());
         }
@@ -275,7 +276,7 @@ public class DeliveryPerson
         
         incTotalCharged(o);
         incValuation(o);
-        
+        setWorking(false);
         if(!isFree()){
             setTargetLocation(ordersToDeliver.first().getDestination());
         }

@@ -25,7 +25,7 @@ public class CommonDP extends DeliveryPerson
          setLocation(getLocation().nextLocation(getTargetLocation())); 
          System.out.println("@@@  DeliveryPerson: "+ getName() + " moving to: "  + getLocation() );
          if(getLocation().equals(getTargetLocation())){
-             if(isFree()){
+             if(!getWorking()){
             notifyPickupArrival();
         }else{
             TreeSet<Order>aux=getOrdersToDeliver();
@@ -36,7 +36,8 @@ public class CommonDP extends DeliveryPerson
             setAsigned(false);
             if(getTargetLocation()!=null){
             aux=getOrdersToDeliver();
-            Iterator<Order> iter=aux.iterator();
+            TreeSet<Order> auxCopy = new TreeSet<>(aux);
+            Iterator<Order> iter=auxCopy.iterator();
             Order o= aux.first();
             while(iter.hasNext()){
                if(getLocation().equals(o.getDestination())){

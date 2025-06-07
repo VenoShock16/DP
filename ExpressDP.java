@@ -23,14 +23,16 @@ public class ExpressDP extends DeliveryPerson
          setLocation(getLocation().nextLocation(getTargetLocation())); 
          System.out.println("@@@  DeliveryPerson: "+ getName() + " moving to: "  + getLocation() );
          if(getLocation().equals(getTargetLocation())){
-             if(isFree()){
+             if(!getWorking()){
             notifyPickupArrival();
-        }else{
+            }else{
+            if(getLocation().equals(getTargetLocation())){
             TreeSet<Order>aux=getOrdersToDeliver();
             notifyOrderArrival(aux.first());
             deliverOrder();//Aqui se hace el incremento de dinero y valoracion.
             
             setAsigned(false);
+            
             if(getTargetLocation()!=null){
                 if(getLocation().equals(getTargetLocation())){
                     aux=getOrdersToDeliver();
@@ -38,11 +40,13 @@ public class ExpressDP extends DeliveryPerson
                     deliverOrder();
                 }
             }
-        }
+            }
+        }  
       }
         
     }
 }
+
 @Override
  public String showFinalInfo()
     {
