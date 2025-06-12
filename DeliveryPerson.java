@@ -259,9 +259,13 @@ public class DeliveryPerson
         
         incTotalCharged(o);
         incValuation(o);
-        setWorking(false);
+        decOcupation();
+        if(getOcupation()==0){
+            setWorking(false);
+        }
         if(!isFree()){
             setTargetLocation(ordersToDeliver.first().getDestination());
+            setAsigned(true);
         }
          
         
@@ -276,10 +280,15 @@ public class DeliveryPerson
         
         incTotalCharged(o);
         incValuation(o);
-        setWorking(false);
+        decOcupation();
+        if(getOcupation()==0){
+            setWorking(false);
+        }
         if(!isFree()){
             setTargetLocation(ordersToDeliver.first().getDestination());
+            setAsigned(true);
         }
+        
          
         
     }

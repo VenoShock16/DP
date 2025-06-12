@@ -29,9 +29,10 @@ public class ExpressDP extends DeliveryPerson
             if(getLocation().equals(getTargetLocation())){
             TreeSet<Order>aux=getOrdersToDeliver();
             notifyOrderArrival(aux.first());
+            setAsigned(false);
             deliverOrder();//Aqui se hace el incremento de dinero y valoracion.
             
-            setAsigned(false);
+            
             
             if(getTargetLocation()!=null){
                 if(getLocation().equals(getTargetLocation())){

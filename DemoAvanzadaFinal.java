@@ -121,7 +121,8 @@ public class DemoAvanzadaFinal
         //ya vienen ordenados por su tipo de urgency, hora de llegada y destinationName
         //TODO colección   orders = company.getOrders();
         TreeSet<Order> orders = company.getOrders();
-        Iterator<Order> it = orders.iterator();
+        TreeSet<Order> ordersCopy = new TreeSet<>(orders);
+        Iterator<Order> it = ordersCopy.iterator();
         while(it.hasNext()) {
             Order order = it.next();
             if(!company.requestPickup(order)) {
@@ -136,6 +137,7 @@ public class DemoAvanzadaFinal
     private void showInicialInfo() {
         //Obtenemos los objetos DeliveryPerson de la compañía
         List<DeliveryPerson> deliveryPersons = company.getDeliveryPersons();
+        Collections.sort(deliveryPersons, new ComparadorNombreDeliveryPerson());
         //Obtenemos los objetos Orders del almacén (vienen ya ordenados)
         //TODO colección  orders = company.getOrders();
 
@@ -194,6 +196,9 @@ public class DemoAvanzadaFinal
         // lo entregó
         //Mostrar los orders obtenidos
         
-
+        for(Order  order : o) {
+            System.out.println(order.showFinalInfo());
+        
+        }
     }
 }

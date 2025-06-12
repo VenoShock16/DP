@@ -31,9 +31,10 @@ public class CommonDP extends DeliveryPerson
             TreeSet<Order>aux=getOrdersToDeliver();
             adjustPopularity(aux.first());
             notifyOrderArrival(aux.first());
+            setAsigned(false);
             deliverOrder();//Aqui se hace el incremento de dinero y valoracion.
             
-            setAsigned(false);
+            
             if(getTargetLocation()!=null){
             aux=getOrdersToDeliver();
             TreeSet<Order> auxCopy = new TreeSet<>(aux);

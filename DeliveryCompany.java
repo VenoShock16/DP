@@ -155,7 +155,7 @@ public class DeliveryCompany
             ToDeliver.add(order);
             dpAux.setOrdersToDeliver(ToDeliver);
             O.remove(order);
-            wareHouse.setOrders(O);
+            wareHouse.setOrders(O); 
         }
        
         
@@ -173,8 +173,12 @@ public class DeliveryCompany
         if(dp.getLocation().equals(wareHouse.getLocation())){
             
             TreeSet<Order>aux=dp.getOrdersToDeliver();
+            Order o1;
+            if(aux!=null){
+                o1=aux.first();
+                dp.pickup(o1);
+            }
             for(Order o: aux){
-            dp.pickup(o);
             System.out.println("<<<<  DeliveryPerson " +dp.getName()+ " at " + dp.getLocation() + " Picks up Order from " + o.getSendingName()+ " to: "+ o.getDestination());
             o.setDeliveryPersonName(dp.getName());
             }
