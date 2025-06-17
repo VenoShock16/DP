@@ -37,7 +37,7 @@ public class Order
             throw new NullPointerException("Destination location");
         }
         //this.location = location;
-        this.location= new Location(5,5);
+        this.location= location;
         this.destination = destination;
         this.sendingName=sendingName;
         this.deliveryTime=deliveryTime;

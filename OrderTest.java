@@ -16,6 +16,7 @@ public class OrderTest
      * Default constructor for test class OrderTest
      */
     Order Oaux;
+    Urgency urgency;
     public OrderTest()
     {
     }
@@ -28,9 +29,9 @@ public class OrderTest
     @Before
     public void setUp()
         {
-        
-        Oaux= new Order("Pep Guardiola",new Location(5,5), new Location(9,1), 13, 
-         1.4,  "Manchester");
+        urgency = new Urgency();
+        Oaux = new Order("Pep Guardiola", new Location(5,5), new Location(9,1), 13, 
+            1.4, "Manchester", urgency);
         }
 
     /**
@@ -52,15 +53,12 @@ public class OrderTest
     @Test
     public void testCreation()
     {
-        //TODO implementar este método
-        // Testear la creación correcta de objetos de tipo Order comprobando 
-        // que la inicialización de campos como dirección de recogida y destino es correcta.
-        Order Oaux= new Order("Pep Guardiola",new Location(5,5), new Location(9,1), 13, 
-         1.4,  "Manchester");
-         assertEquals(Oaux.getSendingName(), "Pep Guardiola");
-        assertEquals(Oaux.getDestination(), new Location(9,1));
-        assertEquals(Oaux.getDeliveryTime(), 13);
-        assertEquals(Oaux.getDestinationName(), "Manchester");
+      
+         assertEquals("Pep Guardiola", Oaux.getSendingName());
+        assertEquals(new Location(9,1), Oaux.getDestination());
+        assertEquals(13, Oaux.getDeliveryTime());
+        assertEquals("Manchester", Oaux.getDestinationName());
+        assertEquals(urgency, Oaux.getUrgency());
     }
     
 
@@ -71,12 +69,8 @@ public class OrderTest
     @Test
     public void testGetDeliveryPersonName()
     {
-        Order Oaux= new Order("Pep Guardiola",new Location(5,5), new Location(9,1), 13, 
-         1.4,  "Manchester");
-         Oaux.setDeliveryPersonName("DP1");
-        //TODO implementar este método
-        // Testear el método que devuelve el nombre del la persona que ha hecho el 
-        // reparto
+        
+        Oaux.setDeliveryPersonName("DP1");
         String aux=Oaux.getDeliveryPersonName();
         assertEquals("DP1", aux);
     }
@@ -88,10 +82,6 @@ public class OrderTest
     @Test
     public void testGetDestination ()
     {
-        Order Oaux= new Order("Pep Guardiola",new Location(5,5), new Location(9,1), 13, 
-         1.4,  "Manchester");
-        //TODO implementar este método
-        // Testear el método que devuelve la dirección de envío del objeto.
         Location aux= Oaux.getDestination();
         assertEquals(new Location(9,1) ,  aux );
     }

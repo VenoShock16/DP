@@ -34,9 +34,6 @@ public class LocationTest
     {
         startLocation = new Location(1, 2);
         destination = new Location(2, 2);
-
-        //TODO
-        //Completar (si es necesario) este método
     }
 
     /**
@@ -59,7 +56,6 @@ public class LocationTest
     {
         assertEquals(startLocation.distance(new Location(5, 7)), 5);
         assertEquals(startLocation.distance(destination), 1);
-        //Misma prueba utilizando otra aserción:
         assertTrue(startLocation.distance(destination) == 1);
     }
 
@@ -70,9 +66,6 @@ public class LocationTest
     public void testAdjacentLocations()
     {
         
-        //TODO implementar este método
-        // Testear la adyacencia entre dos localizaciones. Se puede hacer 
-        // utilizando llamada al método "nextLocation".
         Location next= startLocation.nextLocation(destination);
         assertEquals(startLocation.distance(next), 1);
     }

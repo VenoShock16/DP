@@ -2,6 +2,8 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import java.util.*;
+
 
 /**
  * The test class DeliveryPersonTest.
@@ -10,10 +12,13 @@ import org.junit.Test;
  * @version 2016.02.29
  * @version 2024.10.07 DP classes 
  */
+class Urgency {}
 public class DeliveryPersonTest
 {
-    private DeliveryPerson dp;
-    private Order order;
+    DeliveryPerson dp;
+    Order order;
+    Urgency urgency;
+    DeliveryCompany company;
     //TODO
     //crear más campos (si es necesario) 
     /**
@@ -31,18 +36,14 @@ public class DeliveryPersonTest
     @Before
     public void setUp()
     {
-        DeliveryCompany company = new DeliveryCompany("Compañía DP Delivery Cáceres");
-        // Starting position for the taxi.
+        company = new DeliveryCompany("Compañía DP Delivery Cáceres");
         Location dpLocation = new Location(0, 0);
-        // Locations for the order.
         Location pickup = new Location(1, 2);
         Location destination = new Location(5, 6);
-
-         
-        order = new Order("Kevin", pickup, destination,10, 1.2, "Decathon Cáceres");
+        urgency = new Urgency();
+        order = new Order("Kevin", pickup, destination, 10, 1.2, "Decathlon",urgency );
         dp = new DeliveryPerson(company, dpLocation,"DP1");
-        //TODO
-        //Completar (si es necesario) este método
+        
     }
 
     /**
@@ -67,7 +68,6 @@ public class DeliveryPersonTest
         assertEquals(true, dp.isFree());
         assertEquals("DP1", dp.getName());
         assertEquals(new Location(0, 0), dp.getLocation());
-        //TODO puede ser implementado comparando otros campos
     }
 
     /**
@@ -77,10 +77,13 @@ public class DeliveryPersonTest
     @Test
     public void testPickup()
     {
-        //TODO implementar este método
+        TreeSet<Order> orders = new TreeSet<>();
+        orders.add(order);
+        dp.setOrdersToDeliver(orders);
+        
         dp.pickup(order);
-        assertEquals(false, dp.isFree());
-        assertEquals(new Location(5, 6), dp.getTargetLocation());
+        assertFalse(dp.isFree());
+        assertEquals(order.getDestination(), dp.getTargetLocation());
     }
 
     /**
@@ -90,10 +93,14 @@ public class DeliveryPersonTest
     @Test
     public void testDeliverOrder()
     {
-        //TODO implementar este método
+        TreeSet<Order> orders = new TreeSet<>();
+        orders.add(order);
+        dp.setOrdersToDeliver(orders);
+        dp.setWorking(true);
+        
         dp.deliverOrder();
-        assertEquals(true, dp.isFree());
-        assertEquals(null, dp.getTargetLocation());
+        assertTrue(dp.isFree());
+        assertEquals(1, dp.ordersDelivered());
     }
 
     /**
@@ -103,7 +110,11 @@ public class DeliveryPersonTest
     @Test
     public void testDelivery()
     {
-        //TODO implementar este método
+        TreeSet<Order> orders = new TreeSet<>();
+        orders.add(order);
+        dp.setOrdersToDeliver(orders);
+        dp.setPickupLocation(order.getLocation());
+        
         dp.act();
         dp.act();
         assertEquals(dp.getLocation(), dp.getTargetLocation());
@@ -114,6 +125,7 @@ public class DeliveryPersonTest
         dp.act();
         assertEquals(dp.getLocation(), dp.getTargetLocation());
         assertEquals(true, dp.isFree());
+        assertEquals(1, dp.ordersDelivered());
         
     }
 }
