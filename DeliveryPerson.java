@@ -270,7 +270,7 @@ public class DeliveryPerson
          
         
     }
-    //Se usa para el CommonDP
+    //Se usa para el CommonDP para cuando descarga mas de un paquete en una sola ubicación
     public void deliverOrder(Order o)
     {
         AddToDeliveredOrderSet(o);

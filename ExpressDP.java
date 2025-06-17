@@ -21,7 +21,7 @@ public class ExpressDP extends DeliveryPerson
           incrementIdleCount();
       }else{
          setLocation(getLocation().nextLocation(getTargetLocation())); 
-         System.out.println("@@@  DeliveryPerson: "+ getName() + " moving to: "  + getLocation() );
+         System.out.println("@@@DeliveryPerson: "+ getName() + " moving to: "  + getLocation() );
          if(getLocation().equals(getTargetLocation())){
              if(!getWorking()){
             notifyPickupArrival();

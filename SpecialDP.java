@@ -19,7 +19,7 @@ public class SpecialDP extends DeliveryPerson
  public String showFinalInfo()
     {
         //TODO  implementar este método
-        return "SpecialDP"+ getName() +" at location "+ getLocation() + " - orders delivered: "+
+        return "@@@SpecialDP "+ getName() +" at location "+ getLocation() + " - orders delivered: "+
         ordersDelivered() +" - non active for: " + getIdleCount() + " times  - total to be collected: "
         + obtainTotalCharge() + " -Valuation: "+ obtainValuation();
 

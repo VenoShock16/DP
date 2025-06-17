@@ -23,7 +23,7 @@ public class CommonDP extends DeliveryPerson
           incrementIdleCount();
       }else{
          setLocation(getLocation().nextLocation(getTargetLocation())); 
-         System.out.println("@@@  DeliveryPerson: "+ getName() + " moving to: "  + getLocation() );
+         System.out.println("@@@DeliveryPerson: "+ getName() + " moving to: "  + getLocation() );
          if(getLocation().equals(getTargetLocation())){
              if(!getWorking()){
             notifyPickupArrival();
@@ -44,10 +44,13 @@ public class CommonDP extends DeliveryPerson
                if(getLocation().equals(o.getDestination())){
                     adjustPopularity(o);
                     notifyOrderArrival(o);
-                    deliverOrder(o);
-                    
-                }
-                o= iter.next();
+                    deliverOrder(o);    //Al iterar sobre el set se modifica, por lo que hay
+                    aux=getOrdersToDeliver(); // que actualizarlo
+                    auxCopy = new TreeSet<>(aux);
+                    iter=auxCopy.iterator();
+                    o= aux.first();
+                }else o= iter.next();
+                
             }
                 
             }
