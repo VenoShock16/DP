@@ -85,7 +85,7 @@ public class DeliveryCompany
     Collections.sort(deliveryPersons, new  ComparadorCercaniaNombreDelivery());
     while(i<deliveryPersons.size()&&!enc){
         if(deliveryPersons.get(i).getOcupation()<deliveryPersons.get(i).getMaxLoad() && deliveryPersons.get(i).getAsigned()==false){// Mira si cabe y si no esta ya en reparto
-            if(DeliveryValido(o,deliveryPersons.get(i))){
+            if(deliveryPersons.get(i).DeliveryValido()){
             deliveryPersons.get(i).incOcupation();
             enc=true;
             if(deliveryPersons.get(i).getOcupation()==deliveryPersons.get(i).getMaxLoad()){
@@ -105,26 +105,7 @@ public class DeliveryCompany
         
     }
     
-    public boolean DeliveryValido(Order o, DeliveryPerson dp){// Hacer con herencia
-        int u= o.getUrgency().getValor();
-        boolean enc=false;
-        switch (u){
-            case 1:// NONESSENTIAL
-            if(dp.getMaxLoad()==4)
-            enc= true;
-            break;
-            case 3://IMPORTANT
-            if(dp.getMaxLoad()==4||dp.getMaxLoad()==2)
-            enc= true;
-            break;
-            case 5://EMERGENCY
-             if(dp.getMaxLoad()==1)
-            enc= true; 
-            break;
-            
-        }
-        return enc;
-    }
+    
 
     /**
      * Request a pickup for the given order.
@@ -167,7 +148,8 @@ public class DeliveryCompany
                 dp.pickup(o1);
             }
             for(Order o: aux){
-            System.out.println("<<<<  DeliveryPerson " +dp.getName()+ " at " + dp.getLocation() + " Picks up Order from " + o.getSendingName()+ " to: "+ o.getDestination());
+            dp.introPickup();
+            System.out.println("DeliveryPerson " +dp.getName()+ " at " + dp.getLocation() + " Picks up Order from " + o.getSendingName()+ " to: "+ o.getDestination());
             o.setDeliveryPersonName(dp.getName());
             }
             dp.setWorking(true);
@@ -185,7 +167,9 @@ public class DeliveryCompany
      */
     public void arrivedAtDestination(DeliveryPerson dp, Order order) {
         if(dp.getAsigned()&& dp.getLocation().equals(order.getDestination())){
-        System.out.println("<<<<DeliveryPerson " + dp.getName()+ " at location "+dp.getLocation()  + " delivers Order at: " + order.getDeliveryTime()+ " from: " + order.getSendingName()+ " to: "+ order.getDestinationName());
+        dp.introDeliver();
+        System.out.println("DeliveryPerson " + dp.getName()+ " at  "+dp.getLocation()  + " delivers Order at: " + order.getDeliveryTime()+ " from: " + order.getSendingName()+ " to: "+ order.getDestinationName()
+        +" (charge:  "+order.charge()+" )");
         wareHouse.addDeliveredOrder(order, dp);
         TreeSet<Order>O=wareHouse.getOrders();
             O.remove(order);

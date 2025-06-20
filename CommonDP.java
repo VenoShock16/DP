@@ -23,7 +23,7 @@ public class CommonDP extends DeliveryPerson
           incrementIdleCount();
       }else{
          setLocation(getLocation().nextLocation(getTargetLocation())); 
-         System.out.println("@@@DeliveryPerson: "+ getName() + " moving to: "  + getLocation() );
+         System.out.println("@@@CommonDeliveryPerson: "+ getName() + " moving to: "  + getLocation() );
          if(getLocation().equals(getTargetLocation())){
              if(!getWorking()){
             notifyPickupArrival();
@@ -77,5 +77,22 @@ public void adjustPopularity(Order o){
         + obtainTotalCharge() + " -Valuation: "+ obtainValuation();
 
     }   
+  @Override
+    public  boolean DeliveryValido(){
+        boolean enc=false;
+   
+            if(getMaxLoad()==4)
+            enc= true; 
+            
+        return enc;
+    } 
+    @Override
+    public void introPickup(){
+        System.out.print("<<<<Common");
+    }
     
+    @Override
+    public void introDeliver(){
+       System.out.print("<<<<Common"); 
+    }
 }

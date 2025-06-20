@@ -132,4 +132,7 @@ public class Order
     public void setSurcharge(Surcharge surcharge){
         this.surcharge=surcharge;
     }
+    public Surcharge getSurcharge(){
+        return surcharge;
+    }
 }

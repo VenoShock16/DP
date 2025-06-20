@@ -21,7 +21,7 @@ public class ExpressDP extends DeliveryPerson
           incrementIdleCount();
       }else{
          setLocation(getLocation().nextLocation(getTargetLocation())); 
-         System.out.println("@@@DeliveryPerson: "+ getName() + " moving to: "  + getLocation() );
+         System.out.println("@@@ExpressDeliveryPerson: "+ getName() + " moving to: "  + getLocation() );
          if(getLocation().equals(getTargetLocation())){
              if(!getWorking()){
             notifyPickupArrival();
@@ -56,5 +56,24 @@ public class ExpressDP extends DeliveryPerson
         ordersDelivered() +" - non active for: " + getIdleCount() + " times  - total to be collected: "
         + obtainTotalCharge() + " -Valuation: "+ obtainValuation();
 
+    }
+@Override
+    public  boolean DeliveryValido(){
+        boolean enc=false;
+   
+            if(getMaxLoad()==2)
+            enc= true; 
+            
+        return enc;
+    }    
+
+    @Override
+    public void introPickup(){
+        System.out.print("<<<<Express");
+    }
+    
+    @Override
+    public void introDeliver(){
+       System.out.print("<<<<Express"); 
     }
 }

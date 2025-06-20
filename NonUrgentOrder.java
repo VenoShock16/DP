@@ -33,7 +33,7 @@ public class NonUrgentOrder extends Order
     public String ShowInitialInfo(){
         return "NonUrgent Order from: "+ getSendingName()+" to: "+getDestinationName()+ 
         " at "+ getDeliveryTime() +" weight " +getWeight()+ " from : "+ getLocation().toString()
-        + " to: "+ getDestination().toString()+ getUrgency().Show();
+        + " to: "+ getDestination().toString()+ getUrgency().Show()+" "+getSurcharge().Show();
     }
     @Override
     public String showFinalInfo()

@@ -7,7 +7,7 @@ import java.util.*;
  * @version 2016.02.29
  * @version 2024.10.07 DP classes 
  */
-public class DeliveryPerson 
+public  abstract class DeliveryPerson 
 {
     // The Delivery Company of this DeliveryPerson.
     private DeliveryCompany company;   //TODO cambiar a private
@@ -216,7 +216,6 @@ public class DeliveryPerson
     public void notifyPickupArrival()
     {
         
-        //TODO  implementar este método
         company.arrivedAtPickup(this);
     }
 
@@ -225,7 +224,6 @@ public class DeliveryPerson
      */
     public void notifyOrderArrival(Order order)
     {
-        //TODO  implementar este método
         company.arrivedAtDestination(this, order);
     }
 
@@ -320,27 +318,7 @@ public class DeliveryPerson
     /**
      * Carry out a delivery person's actions.
      */
-    public void act()
-    {
-        
-      if(targetLocation==null){
-          incrementIdleCount();
-      }else{
-         location= location.nextLocation(targetLocation); 
-         System.out.println("@@@  DeliveryPerson: "+ name + " moving to: "  + location );
-         if(location.equals(targetLocation)){
-             if(!Working){
-            notifyPickupArrival();
-        }else{
-            notifyOrderArrival(ordersToDeliver.first());
-            deliverOrder();//Aqui se hace el incremento de dinero y valoracion.
-            if(isFree())
-            asigned=false;
-        }
-      }
-        
-    }
-}
+    public abstract void act();
 
 public boolean getWorking(){
     return Working;
@@ -389,6 +367,14 @@ public void setOrdersToDeliver(TreeSet<Order>o){
         return ordersToDeliver;
     }
     
-   
-    
+   public  abstract boolean DeliveryValido();// Hacer con herencia
+    public void introPickup(){
+        
+    }
+    public void introDeliver(){
+        
+    }
+    public int getTotalCharged(){
+        return totalCharged;
+    }
 }

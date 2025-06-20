@@ -36,6 +36,9 @@ public enum Surcharge
     {
     this.valor=valor;
     }
+    public String Show(){
+        return "<charge:  "+ nombre + "(value: "+ valor+ ")>";
+    }
 }
 
 
