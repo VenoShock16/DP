@@ -121,8 +121,7 @@ public class DemoAvanzadaFinal
         //ya vienen ordenados por su tipo de urgency, hora de llegada y destinationName
         //TODO colección   orders = company.getOrders();
         TreeSet<Order> orders = company.getOrders();
-        TreeSet<Order> ordersCopy = new TreeSet<>(orders);
-        Iterator<Order> it = ordersCopy.iterator();
+        Iterator<Order> it = orders.iterator();
         while(it.hasNext()) {
             Order order = it.next();
             if(!company.requestPickup(order)) {
@@ -186,8 +185,8 @@ public class DemoAvanzadaFinal
         for(DeliveryPerson  dp : deliveryPersons) {
             System.out.println(dp.showFinalInfo());
         }
-        List<Order> o= company.getOrderDelivered();
-        Collections.sort(o, new ComparadorRemitenteHora());
+        // Hacer con la lista de warehouse
+        TreeMap<Order, DeliveryPerson> o=company.getWareHouse().getDeliveredOrders();
         System.out.println("");
         System.out.println("-->> Orders final information <<--");
         System.out.println("-->> ------------------------ <<--");
@@ -196,7 +195,7 @@ public class DemoAvanzadaFinal
         // lo entregó
         //Mostrar los orders obtenidos
         
-        for(Order  order : o) {
+        for(Order  order : o.keySet()) {// Recorro las claves del treemap de Warehouse donde están los pedidos entregados
             System.out.println(order.showFinalInfo());
         
         }

@@ -107,8 +107,7 @@ public class DemoInicialFinal
      */
        private void runSimulation() {
         TreeSet<Order> orders = company.getOrders();
-        TreeSet<Order> ordersCopy = new TreeSet<>(orders);
-       Iterator<Order> it = ordersCopy.iterator();
+       Iterator<Order> it = orders.iterator();
         while(it.hasNext()) {
             Order order = it.next();
             if(!company.requestPickup(order)) {
@@ -173,8 +172,7 @@ public class DemoInicialFinal
         for(DeliveryPerson  dp : deliveryPersons) {
             System.out.println(dp.showFinalInfo());
         }
-        List<Order> o= company.getOrderDelivered();
-        Collections.sort(o, new ComparadorRemitenteHora());
+        TreeMap<Order, DeliveryPerson> o=company.getWareHouse().getDeliveredOrders();
         System.out.println("");
         System.out.println("-->> Orders final information <<--");
         System.out.println("-->> ------------------------ <<--");
@@ -182,7 +180,7 @@ public class DemoInicialFinal
         // en caso de empate por la hora de entrega y mostrar los pedidos y quién 
         // lo entregó
         //Mostrar los orders obtenidos
-         for(Order  order : o) {
+         for(Order  order : o.keySet()) {
             System.out.println(order.showFinalInfo());
         
         }

@@ -165,8 +165,7 @@ public class DemoOneOrderFinal
             System.out.println(dp.showFinalInfo());
         }
         
-        List<Order> o= company.getOrderDelivered();
-        Collections.sort(o, new ComparadorRemitenteHora());
+        TreeMap<Order, DeliveryPerson> o=company.getWareHouse().getDeliveredOrders();
         System.out.println("");
         System.out.println("-->> Orders final information <<--");
         System.out.println("-->> ------------------------ <<--");
@@ -175,7 +174,7 @@ public class DemoOneOrderFinal
         // lo entregó
         //Mostrar los orders obtenidos
         
-        for(Order  order : o) {
+        for(Order  order : o.keySet()) {
             System.out.println(order.showFinalInfo());
         
         }

@@ -13,7 +13,6 @@ public class DeliveryCompany
     private String name;  //nombre de la compañía
     private List<DeliveryPerson> deliveryPersons;
     private WareHouse wareHouse;
-    private List<Order> OrderDelivered;
     /**
      * Constructor for objects of class DeliveryCompany
      */
@@ -22,7 +21,6 @@ public class DeliveryCompany
         this.name = name;
         deliveryPersons= new ArrayList<>();
         wareHouse= new WareHouse();
-        OrderDelivered= new ArrayList<>();
 
     }
 
@@ -44,14 +42,7 @@ public class DeliveryCompany
 
         
     }
-    public List<Order> getOrderDelivered()
-    {       
-        //TODO implementar el método 
-        return OrderDelivered;
-
-        
-    }
-
+    
     /**
      * @return The list of orders.
      */
@@ -114,7 +105,7 @@ public class DeliveryCompany
         
     }
     
-    public boolean DeliveryValido(Order o, DeliveryPerson dp){
+    public boolean DeliveryValido(Order o, DeliveryPerson dp){// Hacer con herencia
         int u= o.getUrgency().getValor();
         boolean enc=false;
         switch (u){
@@ -150,12 +141,9 @@ public class DeliveryCompany
            dpAux.setPickupLocation(wareHouse.getLocation());
             System.out.println("<<<< DeliveryPerson " +dpAux.getName() + " at location " +dpAux.getLocation() + " go to pick up order from  " +order.getSendingName()+ " at location " +dpAux.getTargetLocation());
             TreeSet<Order>ToDeliver=dpAux.getOrdersToDeliver();
-            TreeSet<Order>O=wareHouse.getOrders();
-            OrderDelivered.add(order);
             ToDeliver.add(order);
             dpAux.setOrdersToDeliver(ToDeliver);
-            O.remove(order);
-            wareHouse.setOrders(O); 
+             
         }
        //Aqui no se elimina del warehouse, hacer en el deliver(arrived at destination)
         
@@ -198,7 +186,10 @@ public class DeliveryCompany
     public void arrivedAtDestination(DeliveryPerson dp, Order order) {
         if(dp.getAsigned()&& dp.getLocation().equals(order.getDestination())){
         System.out.println("<<<<DeliveryPerson " + dp.getName()+ " at location "+dp.getLocation()  + " delivers Order at: " + order.getDeliveryTime()+ " from: " + order.getSendingName()+ " to: "+ order.getDestinationName());
-        
+        wareHouse.addDeliveredOrder(order, dp);
+        TreeSet<Order>O=wareHouse.getOrders();
+            O.remove(order);
+            wareHouse.setOrders(O);
         }
     }
     public WareHouse getWareHouse(){

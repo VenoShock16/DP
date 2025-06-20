@@ -22,8 +22,6 @@ public class DeliveryPerson
     //TODO añadir campos necesarios
     private TreeSet<Order> ordersToDeliver;
     
-    private TreeSet<Order> DeliveredOrderSet;
-    
     private int ordersDelivered;
     
     private boolean asigned;
@@ -57,7 +55,6 @@ public class DeliveryPerson
         targetLocation = null;
         idleCount = 0;
         ordersToDeliver =new TreeSet<Order>(new ComparadorOrderWareHouse());
-        DeliveredOrderSet=new TreeSet<Order>(new ComparadorOrderWareHouse());
         ordersDelivered=0;
         this.name=name;
         asigned=false;
@@ -252,7 +249,6 @@ public class DeliveryPerson
     public void deliverOrder()
     {
         Order o= ordersToDeliver.first();
-        AddToDeliveredOrderSet(o);
         ordersToDeliver.remove(o);
         clearTargetLocation();
         incrementOrdersDelivered();
@@ -273,7 +269,7 @@ public class DeliveryPerson
     //Se usa para el CommonDP para cuando descarga mas de un paquete en una sola ubicación
     public void deliverOrder(Order o)
     {
-        AddToDeliveredOrderSet(o);// company addtodelivered de warehouse del arrived del destination
+   // company addtodelivered de warehouse del arrived del destination
         ordersToDeliver.remove(o);
         clearTargetLocation();
         incrementOrdersDelivered();
@@ -393,8 +389,6 @@ public void setOrdersToDeliver(TreeSet<Order>o){
         return ordersToDeliver;
     }
     
-    public void AddToDeliveredOrderSet(Order o){
-        DeliveredOrderSet.add(o);
-    }
+   
     
 }

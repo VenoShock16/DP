@@ -29,7 +29,6 @@ public class OrderTest
     @Before
     public void setUp()
         {
-        urgency = new Urgency();
         Oaux = new Order("Pep Guardiola", new Location(5,5), new Location(9,1), 13, 
             1.4, "Manchester", urgency);
         }

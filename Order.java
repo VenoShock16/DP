@@ -106,7 +106,6 @@ public class Order
      */
     public String showFinalInfo()
     {
-        // TODO
         return " Order Delivered at: "+ getDeliveryTime() +" by:  "+ getDeliveryPersonName() + " to: "+
         getDestinationName() +" from: " + getSendingName();
     }

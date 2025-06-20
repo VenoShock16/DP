@@ -9,7 +9,7 @@ import java.util.*;
 public class ComparadorRemitenteHora implements Comparator<Order>
 {
     public int compare(Order o1, Order o2){  
-        if(o1.getSendingName()==o2.getSendingName()){
+        if(o1.getSendingName().equals(o2.getSendingName())){
             if(o1.getDeliveryTime()>o2.getDeliveryTime()){
                 return 1;
                 
