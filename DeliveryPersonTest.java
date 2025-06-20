@@ -12,7 +12,7 @@ import java.util.*;
  * @version 2016.02.29
  * @version 2024.10.07 DP classes 
  */
-class Urgency {}
+
 public class DeliveryPersonTest
 {
     DeliveryPerson dp;
@@ -40,7 +40,6 @@ public class DeliveryPersonTest
         Location dpLocation = new Location(0, 0);
         Location pickup = new Location(1, 2);
         Location destination = new Location(5, 6);
-        urgency = new Urgency();
         order = new Order("Kevin", pickup, destination, 10, 1.2, "Decathlon",urgency );
         dp = new DeliveryPerson(company, dpLocation,"DP1");
         
@@ -78,7 +77,7 @@ public class DeliveryPersonTest
     public void testPickup()
     {
         TreeSet<Order> orders = new TreeSet<>();
-        orders.add(order);
+        orders.add(order);// Implementar el metodo equals en Order para que se puedan comparar
         dp.setOrdersToDeliver(orders);
         
         dp.pickup(order);

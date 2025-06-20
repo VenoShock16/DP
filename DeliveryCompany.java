@@ -157,7 +157,7 @@ public class DeliveryCompany
             O.remove(order);
             wareHouse.setOrders(O); 
         }
-       
+       //Aqui no se elimina del warehouse, hacer en el deliver(arrived at destination)
         
         return true;
     }
